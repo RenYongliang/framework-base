@@ -17,13 +17,13 @@ public class ResultModel<T> implements Serializable {
     private T data;
 
     private ResultModel(Integer code, String message) {
-        this.success = code.equals(200) ? true : false;
+        this.success = code.equals(200);
         this.status = code;
         this.message = message;
     }
 
     private ResultModel(Integer code, String message, T data) {
-        this.success = code.equals(200) ? true : false;
+        this.success = code.equals(200);
         this.status = code;
         this.message = message;
         this.data = data;
