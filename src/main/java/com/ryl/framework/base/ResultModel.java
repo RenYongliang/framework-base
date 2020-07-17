@@ -37,7 +37,7 @@ public class ResultModel<T> implements Serializable {
         return new ResultModel(ResultStatus.SUCCESS.getCode(), ResultStatus.SUCCESS.getMessage(), data);
     }
 
-//    //防止与success(T data)有歧义,成功一般返回data;message就是成功,一般不变
+//    //防止与success(T data)有歧义,成功一般返回data;message就是成功,一般不变。建议使用ResultModel.success().setMessage("xxxx");
 //    public static ResultModel success(String message) {
 //        return new ResultModel(ResultStatus.SUCCESS.getCode(), message);
 //    }
@@ -55,7 +55,7 @@ public class ResultModel<T> implements Serializable {
         return new ResultModel(ResultStatus.FAILURE.getCode(), message);
     }
 
-    //当返回data是String时会与fail(String message)有歧义
+    //当返回data是String时会与fail(String message)有歧义。建议使用ResultModel.fail().setDate("xxxx");
     public static <T> ResultModel fail(T data) {
         return new ResultModel(ResultStatus.FAILURE.getCode(), ResultStatus.FAILURE.getMessage(), data);
     }
