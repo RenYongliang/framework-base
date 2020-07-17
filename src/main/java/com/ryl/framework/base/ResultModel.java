@@ -60,10 +60,6 @@ public class ResultModel<T> implements Serializable {
         return new ResultModel(ResultStatus.FAILURE.getCode(), ResultStatus.FAILURE.getMessage(), data);
     }
 
-    protected static ResultModel fail(Integer code, String message) {
-        return new ResultModel(code, message);
-    }
-
     public static <T> ResultModel fail(T data, String message) {
         return new ResultModel(ResultStatus.FAILURE.getCode(), message, data);
     }
