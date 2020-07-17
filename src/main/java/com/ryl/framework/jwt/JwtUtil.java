@@ -3,7 +3,6 @@ package com.ryl.framework.jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
@@ -11,15 +10,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ryl.framework.jwt.JwtProperties.*;
+
 /**
  * @author: ryl
  * @description: JWT token 工具类
  * @date: 2020-03-03 09:21:07
  */
 public class JwtUtil {
-
-    @Autowired
-    private static JwtProperties jwtProperties;
 
     /**
      * 传userId生成token
@@ -40,16 +38,16 @@ public class JwtUtil {
     public static String generateJwtToken(JwtUser jwtUser) {
         // expireDate 2小时
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR, jwtProperties.getExpireTime());
+        calendar.add(Calendar.HOUR, EXPIRE_TIME);
         Date expireDate = calendar.getTime();
         //载荷信息 存放user对象
         Map<String, Object> claimsMap = new HashMap<>(1);
-        claimsMap.put(jwtProperties.claimsKey, jwtUser);
+        claimsMap.put(CLAIMS_KEY, jwtUser);
         String jwt = Jwts.builder()
                 .setClaims(claimsMap)
-                .setSubject(jwtProperties.subject)
+                .setSubject(JWT_SUBJECT)
                 .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecret())
+                .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
         return jwt;
     }
@@ -61,7 +59,7 @@ public class JwtUtil {
      */
     public static JwtUser getJwtUser(HttpServletRequest request){
         //header获取token
-        String token = request.getHeader(jwtProperties.getHeaderKey());
+        String token = request.getHeader(HEADER_KEY);
         return getJwtUser(token);
     }
 
@@ -72,12 +70,12 @@ public class JwtUtil {
      */
     public static JwtUser getJwtUser(String token){
         //去除前缀 Bearer
-        token = token.substring(jwtProperties.tokenPrefix.length());
+        token = token.substring(TOKEN_PREFIX_TYPE.length());
         Object o = Jwts.parser()
-                .setSigningKey(jwtProperties.getSecret())
+                .setSigningKey(SECRET)
                 .parseClaimsJws(token)
                 .getBody()
-                .get(jwtProperties.getClaimsKey());
+                .get(CLAIMS_KEY);
         //转成JwtUser对象
         return new ObjectMapper().convertValue(o,JwtUser.class);
     }
