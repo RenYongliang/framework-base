@@ -21,19 +21,14 @@ import java.util.List;
 @RestController
 public class GeneratorController {
 
-    @Autowired
-    private CodeGenerator codeGenerator;
-
     @RequestMapping("/generate")
     @ApiOperation("代码自动生成")
     public ResultModel generateCode(@RequestBody CodeGenerateDTO codeGenerateDTO) {
-
         List<String> tables = codeGenerateDTO.getTables();
         List<String> excludeTables = codeGenerateDTO.getExcludeTables();
-        codeGenerator.run(codeGenerateDTO.getAuthor(),
+        new CodeGenerator().run(codeGenerateDTO.getAuthor(),
                 tables.toArray(new String[tables.size()]),
                 excludeTables.toArray(new String[excludeTables.size()]));
-
         return ResultModel.success("代码生成成功！");
     }
 
