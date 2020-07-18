@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.google.common.base.CaseFormat;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ import java.util.Map;
  * @description:
  * @date: 2020-07-17 17:42:57
  */
+@Component
 public class CodeGenerator {
 
     @Value("${spring.datasource.url:}")

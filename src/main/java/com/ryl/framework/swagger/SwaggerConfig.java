@@ -27,8 +27,9 @@ public class SwaggerConfig {
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2).groupName(swaggerProperties.getGroupName())
                 .apiInfo(apiInfo())
-                .select().apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                .apis(RequestHandlerSelectors.basePackage(swaggerProperties.getBasePackage()))
+                .select()
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+//                .apis(RequestHandlerSelectors.basePackage(swaggerProperties.getBasePackage()))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -42,4 +43,5 @@ public class SwaggerConfig {
                 .version(swaggerProperties.getVersion())
                 .build();
     }
+
 }

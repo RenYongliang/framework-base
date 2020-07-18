@@ -65,6 +65,10 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.3.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
