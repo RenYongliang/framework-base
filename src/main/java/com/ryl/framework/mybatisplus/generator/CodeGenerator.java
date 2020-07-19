@@ -41,7 +41,6 @@ public class CodeGenerator {
     private String module;
 
 
-
     public void run(String author, String[] tables, String[] excludeTables, String[] ignorePrefixes) {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
@@ -103,21 +102,21 @@ public class CodeGenerator {
                 return projectPath + "/src/main/java//" + pc.getParent().replace(".", "/") + "/model/dto/" + tableInfo.getEntityName() + "DTO.java";
             }
         });
-        /*
-        cfg.setFileCreate(new IFileCreate() {
-            @Override
-            public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
-                // 判断自定义文件夹是否需要创建
-                checkDir("调用默认方法创建的目录，自定义目录用");
-                if (fileType == FileType.MAPPER) {
-                    // 已经生成 mapper 文件判断存在，不想重新生成返回 false
-                    return !new File(filePath).exists();
-                }
-                // 允许生成模板文件
-                return true;
-            }
-        });
-        */
+
+//        cfg.setFileCreate(new IFileCreate() {
+//            @Override
+//            public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
+//                // 判断自定义文件夹是否需要创建
+//                checkDir("调用默认方法创建的目录，自定义目录用");
+//                if (fileType == FileType.MAPPER) {
+//                    // 已经生成 mapper 文件判断存在，不想重新生成返回 false
+//                    return !new File(filePath).exists();
+//                }
+//                // 允许生成模板文件
+//                return true;
+//            }
+//        });
+
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
 
@@ -143,7 +142,7 @@ public class CodeGenerator {
         // 公共父类Entity
         strategy.setSuperEntityClass("com.ryl.framework.mybatisplus.model.BaseEntity");
         // 公共父类Controller
-        //strategy.setSuperControllerClass("io.specialrooter.web.BaseController");
+        //strategy.setSuperControllerClass("com.ryl.framework.mybatisplus.controller.BaseController");
         // 写于父类中的公共字段
         strategy.setSuperEntityColumns(new String[]{"create_user_id", "modify_user_id", "create_time", "modify_time", "state_deleted"});
         strategy.setTableFillList(tableFillList);
