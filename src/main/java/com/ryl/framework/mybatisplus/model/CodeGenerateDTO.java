@@ -21,4 +21,7 @@ public class CodeGenerateDTO {
 
     @ApiModelProperty("要排除的表名列表")
     private List<String> excludeTables;
+
+    @ApiModelProperty("生成实体时要忽略的表名前缀")
+    private List<String> ignorePrefixes;
 }

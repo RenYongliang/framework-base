@@ -69,6 +69,13 @@
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/swagger-bootstrap-ui -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>

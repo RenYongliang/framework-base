@@ -14,12 +14,9 @@ import lombok.experimental.Accessors;
 </#if>
 
 /**
-* <p>
-* ${table.comment!}
-* </p>
-*
+* @description ${table.comment!}
 * @author ${author}
-* @since ${date}
+* @date ${date}
 */
 <#if entityLombokModel>
 @Data
@@ -29,6 +26,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value = "${entity}数据传输对象", description = "${table.comment!}")
 </#if>
 public class ${entity}DTO {
+
 <#if entitySerialVersionUID>
     private static final long serialVersionUID = 1L;
 </#if>

@@ -42,7 +42,7 @@ public class CodeGenerator {
 
 
 
-    public void run(String author, String[] tables, String[] excludeTables) {
+    public void run(String author, String[] tables, String[] excludeTables, String[] ignorePrefixes) {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -136,8 +136,10 @@ public class CodeGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+        strategy.setSuperEntityClass("com.ryl.framework.mybatisplus.model.BaseEntity");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
+        strategy.setTablePrefix(ignorePrefixes);//表前缀
         // 公共父类Entity
         strategy.setSuperEntityClass("com.ryl.framework.mybatisplus.model.BaseEntity");
         // 公共父类Controller
@@ -151,7 +153,6 @@ public class CodeGenerator {
             strategy.setExclude(excludeTables);
         }
         strategy.setControllerMappingHyphenStyle(false);
-        strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
