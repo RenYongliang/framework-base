@@ -1,5 +1,6 @@
 package ${package.Controller};
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ${package.Entity}.${table.entityName};
 import ${cfg.ModelDTO}.${table.entityName}DTO;
@@ -9,22 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 <#else>
 import org.springframework.stereotype.Controller;
 </#if>
-<#if superControllerClassPackage??>
 import org.springframework.web.bind.annotation.PostMapping;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiOperation;
 import com.ryl.framework.base.ResultModel;
-import com.ryl.framework.base.ResultStatus;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.ryl.framework.mybatisplus.model.BaseEntity;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.validation.annotation.Validated;
-import ${superControllerClassPackage};
 import java.util.List;
-</#if>
 
 /**
 *
@@ -42,11 +38,11 @@ import java.util.List;
 <#if kotlin>
 class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
 <#else>
-<#if superControllerClass??>
+    <#if superControllerClass??>
 public class ${table.controllerName} extends ${superControllerClass}<${table.entityName}> {
-<#else>
+    <#else>
 public class ${table.controllerName} {
-</#if>
+    </#if>
 
     @Autowired
     private I${table.entityName}Service i${table.entityName}Service;
@@ -62,12 +58,13 @@ public class ${table.controllerName} {
     @ApiOperation(value = "新增或修改${table.comment!}", notes = "新增或修改${table.comment!}信息")
     @PostMapping("/saveOrUpdate")
     public ResultModel<${table.entityName}> saveOrUpdate(@RequestBody @Validated ${table.entityName}DTO <#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>DTO) {
-    ${table.entityName} <#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if> = BeanUtils.copyProperties(<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>DTO,<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>DTO);
+        ${table.entityName} <#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if> = new ${table.entityName}();
+        BeanUtils.copyProperties(<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>DTO, <#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>);
         boolean bool = i${table.entityName}Service.saveOrUpdate(<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>);
         if(bool){
             return ResultModel.success(<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>);
         }else{
-            return ResultModel.error(bool);
+            return ResultModel.fail(bool);
         }
     }
 
@@ -80,8 +77,9 @@ public class ${table.controllerName} {
 
     @ApiOperation(value = "根据id获取${table.comment!}", notes = "根据id获取${table.comment!}")
     @PostMapping("/get")
-        public ResultModel<${table.entityName}> get(@RequestBody BaseModel model) {
-        return ResultModel.success(i${table.entityName}Service.getById(model.getId()));
+    public ResultModel<${table.entityName}> get(@RequestBody Long id) {
+        ${table.entityName} <#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if> = i${table.entityName}Service.getById(id);
+        return ResultModel.success(<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>);
     }
 
 }
