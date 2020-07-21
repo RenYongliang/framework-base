@@ -36,7 +36,7 @@ import java.util.List;
 <#else>
 @Controller
 </#if>
-@RequestMapping("<#if package.ModuleName??>/${package.ModuleName?replace('.','/')}</#if>/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
+@RequestMapping("/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
 <#if kotlin>
 class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
 <#else>
