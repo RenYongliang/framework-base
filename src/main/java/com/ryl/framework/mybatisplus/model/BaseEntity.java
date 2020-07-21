@@ -1,5 +1,6 @@
 package com.ryl.framework.mybatisplus.model;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -28,6 +29,7 @@ public class BaseEntity implements Serializable {
     @ApiModelProperty("更新时间")
     private LocalDateTime modifyTime;
 
+    @TableLogic
     @ApiModelProperty("删除状态")
     private Integer stateDeleted;
 }
