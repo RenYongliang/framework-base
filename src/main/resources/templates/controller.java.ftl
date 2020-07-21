@@ -10,16 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 <#else>
 import org.springframework.stereotype.Controller;
 </#if>
-import org.springframework.web.bind.annotation.PostMapping;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.ryl.framework.base.ResultModel;
+import com.ryl.framework.mybatisplus.model.BasePage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiOperation;
-import com.ryl.framework.base.ResultModel;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import java.util.List;
 
 /**
@@ -49,8 +51,8 @@ public class ${table.controllerName} {
 
     @ApiOperation(value = "分页查询")
     @PostMapping("/page")
-    public ResultModel<IPage<${table.entityName}>> list(@RequestBody Page page) {
-        IPage<${table.entityName}> pageList = i${table.entityName}Service.page(page);
+    public ResultModel<IPage<${table.entityName}>> list(@RequestBody BasePage basePage) {
+        IPage<${table.entityName}> pageList = i${table.entityName}Service.page(basePage.getPage());
         return ResultModel.success(pageList);
     }
 
@@ -70,7 +72,7 @@ public class ${table.controllerName} {
 
     @ApiOperation(value = "单个或批量删除", notes = "单个或批量删除")
     @PostMapping("/deleteBatch")
-    public ResultModel<Boolean> deleteBatch(@RequestBody @ApiParam("多个ID")List<Long> ids) {
+    public ResultModel<Boolean> deleteBatch(@RequestBody List<Long> ids) {
         boolean del = i${table.entityName}Service.removeByIds(ids);
         return ResultModel.success(del);
     }

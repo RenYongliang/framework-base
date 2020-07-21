@@ -34,8 +34,10 @@ public class SwaggerConfig {
     public Docket restApi() {
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
-        pars.add(tokenPar.name("token").description("令牌").defaultValue("sfasfdsfdfsdfdsfsd").modelRef(new ModelRef("string")).parameterType("header").required(false).build());
-        pars.add(tokenPar.name("appId").description("应用id").defaultValue("dsge54fesgf5dg45egds2fe").modelRef(new ModelRef("string")).parameterType("header").required(false).build());
+        tokenPar.name("token").description("令牌").defaultValue("sfasfdsfdfsdfdsfsd").modelRef(new ModelRef("string")).parameterType("header").required(false);
+        pars.add(tokenPar.build());
+        tokenPar.name("appId").description("应用id").defaultValue("dsge54fesgf5dg45egds2fe").modelRef(new ModelRef("string")).parameterType("header").required(false);
+        pars.add(tokenPar.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName(swaggerProperties.getGroupName())
                 .globalOperationParameters(pars)

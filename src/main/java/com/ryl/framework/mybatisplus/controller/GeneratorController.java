@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,11 +30,15 @@ public class GeneratorController {
         List<String> tables = codeGenerateDTO.getTables();
         List<String> excludeTables = codeGenerateDTO.getExcludeTables();
         List<String> ignorePrefixes = codeGenerateDTO.getIgnorePrefixes();
-        codeGenerator.run(codeGenerateDTO.getAuthor(),
-                tables.toArray(new String[tables.size()]),
-                excludeTables.toArray(new String[excludeTables.size()]),
-                ignorePrefixes.toArray(new String[ignorePrefixes.size()]));
-        return ResultModel.success("代码生成成功！");
+        try {
+            codeGenerator.run(codeGenerateDTO.getAuthor(),
+                    tables.toArray(new String[tables.size()]),
+                    excludeTables.toArray(new String[excludeTables.size()]),
+                    ignorePrefixes.toArray(new String[ignorePrefixes.size()]));
+            return ResultModel.success("代码生成成功！");
+        } catch (Exception e) {
+            return ResultModel.fail(e.getMessage());
+        }
     }
 
 }

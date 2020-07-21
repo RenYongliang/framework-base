@@ -1,7 +1,6 @@
 package com.ryl.framework.mybatisplus.generator;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
@@ -87,7 +86,7 @@ public class CodeGenerator {
         List<FileOutConfig> focList = new ArrayList();
         focList.add(new FileOutConfig(xml) {
             public String outputFile(TableInfo tableInfo) {
-                return projectPath + "/src/main/resources/mapper/" + pc.getModuleName().replace(".", "/") + "/" + tableInfo.getEntityName() + "Mapper.xml";
+                return projectPath + "/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
             }
         });
         String entityVO = "/templates/entityVO.java.ftl";
@@ -147,7 +146,8 @@ public class CodeGenerator {
         strategy.setTableFillList(tableFillList);
         if (StringUtils.checkValNotNull(tables)) {
             strategy.setInclude(tables);
-        } else if (excludeTables != null && excludeTables.length > 0 && ObjectUtils.isNotEmpty(excludeTables[0])) {
+        }
+        if (excludeTables != null && excludeTables.length > 0) {
             strategy.setExclude(excludeTables);
         }
         strategy.setControllerMappingHyphenStyle(false);
